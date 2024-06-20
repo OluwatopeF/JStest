@@ -24,5 +24,6 @@ function checkCountValue() {
 
 function reset() {
     count = 0;
-    alert("You got no subs FOOL");
+    displayCount();
+    alert("You got no subs FOOL. Click to see it");
 }
