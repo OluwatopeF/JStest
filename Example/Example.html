@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar with Results</title>
+    <style>
+        #results {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        .result-item img {
+            max-width: 100px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <button onclick="search()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+    <div id="results"></div>
+
+    <script>
+        // Sample JSON data
+        const data = [
+            {
+                "name": "Apple",
+                "image": "apple.jpg"
+            },
+            {
+                "name": "Banana",
+                "image": "banana.jpg"
+            },
+            {
+                "name": "Cherry",
+                "image": "cherry.jpg"
+            }
+        ];
+
+        function search() {
+            const query = document.getElementById('searchInput').value;
+            if (typeof query === 'string') {
+                const lowercaseQuery = query.toLowerCase();
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = ''; // Clear previous results
+                let resultsFound = false;
+
+                data.forEach(item => {
+                    if (item.name.toLowerCase().includes(lowercaseQuery)) {
+                        const resultItem = document.createElement('div');
+                        resultItem.classList.add('result-item');
+
+                        const img = document.createElement('img');
+                        img.src = item.image;
+                        img.alt = item.name;
+
+                        const name = document.createElement('p');
+                        name.textContent = item.name;
+
+                        resultItem.appendChild(img);
+                        resultItem.appendChild(name);
+                        resultsDiv.appendChild(resultItem);
+                        resultsFound = true;
+                    }
+                });
+
+                if (resultsFound) {
+                    resultsDiv.style.display = 'block';
+                } else {
+                    resultsDiv.style.display = 'none';
+                }
+            } else {
+                console.error("Search query is not a string");
+            }
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const resultsDiv = document.getElementById('results');
+
+            searchInput.value = ''; // Clear the search input
+            resultsDiv.innerHTML = ''; // Clear the results
+            resultsDiv.style.display = 'none'; // Hide the results div
+        }
+    </script>
+</body>
+</html>
